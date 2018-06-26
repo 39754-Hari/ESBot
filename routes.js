@@ -97,8 +97,8 @@ var createIncident = function(req, responseObj){
 						console.log("Description " + description + "\nUrgency " + urgency);
 		
 		
-						incident.createIncident(description, urgency).then(function(result){ //returns promise 
-								console.log(result)
+						incident.createIncident(description, urgency).then(function(resultObj){ //returns promise 
+								console.log(resultObj)
 		
 								message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + result.number.replace("INC", "INC ") + "'";
 								simpleResponse(responseObj, message)
