@@ -20,7 +20,7 @@ module.exports = function ServiceNowBase(){
         constructor(table_name) {
 
             // Loading required config
-            let config = require('../config')();
+            let config = require('../config').servicenowValues;
 
             super(config.SN_INSTANCE_ID, table_name, config.SN_USERNAME, config.SN_PASSWORD, config.SN_API_VERSION);
 
