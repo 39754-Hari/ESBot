@@ -100,7 +100,7 @@ var createIncident = function(req, responseObj){
 						incident.createIncident(description, urgency).then(function(resultObj){ //returns promise 
 								console.log(resultObj)
 		
-								message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + resultObj.number.replace("INC", "INC ") + "'";
+								message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident id '" + resultObj.number.replace("INC", "INC ") + "'";
 							simpleResponse(responseObj, message)
 								.then(function(result){
 									var chips = [{"title": "Menu"}]
