@@ -218,7 +218,7 @@ var getIncidentById = function(req, responseObj){
 							}
 						});
 	});
-	console.log("Inside Incident Status");
+	/*console.log("Inside Incident Status");
 	
 			var incident_number = "";
 			incident_number = "INC"+req.body.result.parameters.incident_number;
@@ -290,7 +290,7 @@ var getIncidentById = function(req, responseObj){
 						source: "boehringer-ingelheim"
 					});
 				}
-			});
+			});*/
 }
 
 var loginSucess = function(responseObj){
