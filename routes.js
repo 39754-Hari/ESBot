@@ -205,7 +205,7 @@ var getIncidentById = function(req, responseObj){
 								console.log(message);
 							}
 							else{
-								message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + resultobj[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + resultobj[0].short_description + "</br><strong>Status :</strong> " + stateDecode(resultobj[0].state) + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
+								message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + resultobj[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + resultobj[0].short_description + "</br><strong>Status :</strong> " + stateDecode(resultobj[0].state);// + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
 								simpleResponse(responseObj, message)
 									.then(function(result){
 										var chips = [{"title": "Menu"}]
