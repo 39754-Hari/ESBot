@@ -17,6 +17,7 @@ router.post('/botHandler',function(req, res){
 		case 'input.welcome':func = welcome;break;
 		case 'input.verifyOtp': func = verifyOtp;break;
 		case 'input.unknown':func = defaultFallBack;break;
+		case 'input.create_incident': func = createIncident;break;
 	}
 	func(req.body,responseObj)
 	.then(function(result){
@@ -56,6 +57,27 @@ router.post('/validateUser',function(req, res){
 var welcome = function(req, responseObj){
 	return new Promise(function(resolve,reject){
 		simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
+		.then(function(result){
+			var buttons = [
+			  {
+				"title": "Login",
+				"openUrlAction": {
+				  "url": "https://logintests.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
+				}
+			  }
+			]
+			return basicCard(result,"Please login to Help you", buttons);
+		})
+		.then(function(result){
+			resolve(result);		
+		})
+	});
+}
+
+var createIncident = function(req, responseObj){
+	return new Promise(function(resolve,reject){
+		console.log('Request::',req);
+		simpleResponse(responseObj, "Your incident has been created successfully.")
 		.then(function(result){
 			var buttons = [
 			  {
