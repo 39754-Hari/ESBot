@@ -76,18 +76,11 @@ var welcome = function(req, responseObj){
 
 var createIncident = function(req, responseObj){
 	return new Promise(function(resolve,reject){
-		console.log('Request::',req);
+		console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
 		simpleResponse(responseObj, "Your incident has been created successfully.")
 		.then(function(result){
-			var buttons = [
-			  {
-				"title": "Login",
-				"openUrlAction": {
-				  "url": "https://logintests.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
-				}
-			  }
-			]
-			return basicCard(result,"Please login to Help you", buttons);
+			var chips = [{"title": "Menu"}]
+			return suggestions(result,chips);
 		})
 		.then(function(result){
 			resolve(result);		
