@@ -416,6 +416,36 @@ var suggestions = function(response, chips){
 	});	
 }
 
+//For decoding state from number to text
+function stateDecode (state) {
+    console.log("Inside stateDecode function");
+    console.log("Recieved state " + state);
+
+    var decodedState = ""
+
+    switch (state) {
+        case "1" :
+            decodedState = "New";
+            break;
+        case "2" :
+            decodedState = "In Progress";
+            break;
+        case "3" : 
+            decodedState = "On Hold";
+            break;
+        case "6" :
+            decodedState = "Resolved";
+            break;
+        case "7" :
+            decodedState = "Closed";
+            break;
+        case "8" :
+            decodedState = "Canceled";
+    }
+
+    return decodedState
+}
+
 var defaultFallBack = function(req, response){
 	return new Promise(function(resolve,reject){
 		response.payload.followupEvent = {
