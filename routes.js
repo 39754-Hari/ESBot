@@ -18,6 +18,7 @@ router.post('/botHandler',function(req, res){
 		case 'input.verifyOtp': func = verifyOtp;break;
 		case 'input.unknown':func = defaultFallBack;break;
 		case 'input.create_incident': func = createIncident;break;
+		case 'input.incident_status_by_id': func = getIncidentById;break;
 	}
 	func(req.body,responseObj)
 	.then(function(result){
@@ -161,6 +162,134 @@ var createIncident = function(req, responseObj){
 							});
 	
 					});*/
+}
+
+
+var getIncidentById = function(req, responseObj){
+	return new Promise(function(resolve,reject){
+		console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
+		/*simpleResponse(responseObj, "Your incident has been created successfully.")
+		.then(function(result){
+			var chips = [{"title": "Menu"}]
+			return suggestions(result,chips);
+		})
+		.then(function(result){
+			resolve(result);		
+		})*/
+		console.log("Inside Create Incident");
+		
+					var incident_number = "";
+					incident_number = "INC"+req.queryResult.parameters.incident_number;
+		
+						console.log("Description " + description + "\nUrgency " + urgency);
+		
+		
+						var message = "";
+						
+								console.log("Incident Number " + incident_number)
+						
+						
+								incident.getIncidentByIncidentId(incident_number).then(function(resultobj){ //returns promise 
+									console.log(resultobj[0]);
+								
+									if (resultobj.length == 0) {
+										message = "There is no record for the given incident number " + incident_number.replace("INC", "INC ");
+							simpleResponse(responseObj, message)
+								.then(function(result){
+									var chips = [{"title": "Menu"}]
+									return suggestions(result,chips);
+								})
+								.then(function(result){
+									resolve(result);		
+								})
+								console.log(message);
+							}
+							else{
+								message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + resultobj[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + resultobj[0].short_description + "</br><strong>Status :</strong> " + stateDecode(resultobj[0].state) + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
+								simpleResponse(responseObj, message)
+									.then(function(result){
+										var chips = [{"title": "Menu"}]
+										return suggestions(result,chips);
+									})
+									.then(function(result){
+										resolve(result);		
+									})
+									console.log(message);
+							}
+						});
+	});
+	console.log("Inside Incident Status");
+	
+			var incident_number = "";
+			incident_number = "INC"+req.body.result.parameters.incident_number;
+	
+			var message = "";
+	
+			console.log("Incident Number " + incident_number)
+	
+	
+			incident.getIncidentByIncidentId(incident_number).then(function(result){ //returns promise 
+				console.log(result[0]);
+			
+				if (result.length == 0) {
+					message = "There is no record for the given incident number " + incident_number.replace("INC", "INC ");
+	
+					callback({
+						status: "ok",
+						speech: message,
+						displayText:message,
+						data: {
+							"facebook":[
+								{
+									"sender_action": "typing_on"
+								},
+								{
+									"text": message,
+								},
+								{
+									"sender_action": "typing_off"
+								},
+							]
+						},
+						contextOut: [],
+						source: "boehringer-ingelheim"
+					});
+				} else {
+					
+					message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + result[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + result[0].short_description + "</br><strong>Status :</strong> " + stateDecode(result[0].state) + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(result[0].assigned_to);
+	
+					callback({
+						status: "ok",
+						speech: message,
+						displayText:message,
+						data: {
+							"facebook":{
+								"attachment": {
+									"type": "template",
+									"payload": {
+										"template_type": "button",
+										"text": message + "<br><br>What do you want to do next?",
+										"buttons": [
+											{
+												"type": "postback",
+												"title": "Start Over",
+												"payload": "Hi"
+											},
+											{
+												"type": "postback",
+												"title": "End Conversation",
+												"payload": "Bye"
+											}
+										]
+									}
+								}
+							}
+						},
+						contextOut: [],
+						source: "boehringer-ingelheim"
+					});
+				}
+			});
 }
 
 var loginSucess = function(responseObj){
