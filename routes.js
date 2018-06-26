@@ -256,7 +256,7 @@ var getIncidentById = function(req, responseObj){
 					});
 				} else {
 					
-					message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + result[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + result[0].short_description + "</br><strong>Status :</strong> " + stateDecode(result[0].state) + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(result[0].assigned_to);
+					message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + result[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + result[0].short_description + "</br><strong>Status :</strong> " + stateDecode(result[0].state); //+ "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(result[0].assigned_to);
 	
 					callback({
 						status: "ok",
