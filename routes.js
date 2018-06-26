@@ -167,7 +167,7 @@ var createIncident = function(req, responseObj){
 
 var getIncidentById = function(req, responseObj){
 	return new Promise(function(resolve,reject){
-		console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
+		//console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
 		/*simpleResponse(responseObj, "Your incident has been created successfully.")
 		.then(function(result){
 			var chips = [{"title": "Menu"}]
@@ -176,12 +176,12 @@ var getIncidentById = function(req, responseObj){
 		.then(function(result){
 			resolve(result);		
 		})*/
-		console.log("Inside Create Incident");
+		console.log("Inside Incident status");
 		
 					var incident_number = "";
 					incident_number = "INC"+req.queryResult.parameters.incident_number;
 		
-						console.log("Description " + description + "\nUrgency " + urgency);
+						//console.log("Description " + description + "\nUrgency " + urgency);
 		
 		
 						var message = "";
