@@ -101,14 +101,15 @@ var createIncident = function(req, responseObj){
 								console.log(resultObj)
 		
 								message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + resultObj.number.replace("INC", "INC ") + "'";
-								simpleResponse(responseObj, message)
+							/*	simpleResponse(responseObj, message)
 								.then(function(result){
 									var chips = [{"title": "Menu"}]
 									return suggestions(result,chips);
 								})
 								.then(function(result){
 									resolve(result);		
-								})
+								})*/
+								console.log(message);
 						});
 	});
 	/*console.log("Inside Create Incident");
