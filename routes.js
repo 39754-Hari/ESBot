@@ -205,92 +205,24 @@ var getIncidentById = function(req, responseObj){
 								console.log(message);
 							}
 							else{
-								message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + resultobj[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + resultobj[0].short_description + "</br><strong>Status :</strong> " + stateDecode(resultobj[0].state);// + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
-								simpleResponse(responseObj, message)
-									.then(function(result){
-										var chips = [{"title": "Menu"}]
-										return suggestions(result,chips);
-									})
-									.then(function(result){
-										resolve(result);		
-									})
-									console.log(message);
+								 var displayText = "Below are the details for the requested Incident:- ";
+								displayText = displayText +"Incident ID : " + resultobj[0].number.replace("INC", "INC ") + " Short Description : " + resultobj[0].short_description + "Status : " + stateDecode(resultobj[0].state);// + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
+								var speech = "These are the details for the requested Incident "
+								responseObj.payload.google.richResponse.items.push({
+									"simpleResponse": {
+										"textToSpeech": speech,
+										"displayText": responseText
+									}
+								});
+								var chips = [{"title": "Menu"}]
+								suggestions(responseObj,chips)
+								.then(function(result){
+									resolve(result);		
+								})
+								
 							}
 						});
 	});
-	/*console.log("Inside Incident Status");
-	
-			var incident_number = "";
-			incident_number = "INC"+req.body.result.parameters.incident_number;
-	
-			var message = "";
-	
-			console.log("Incident Number " + incident_number)
-	
-	
-			incident.getIncidentByIncidentId(incident_number).then(function(result){ //returns promise 
-				console.log(result[0]);
-			
-				if (result.length == 0) {
-					message = "There is no record for the given incident number " + incident_number.replace("INC", "INC ");
-	
-					callback({
-						status: "ok",
-						speech: message,
-						displayText:message,
-						data: {
-							"facebook":[
-								{
-									"sender_action": "typing_on"
-								},
-								{
-									"text": message,
-								},
-								{
-									"sender_action": "typing_off"
-								},
-							]
-						},
-						contextOut: [],
-						source: "boehringer-ingelheim"
-					});
-				} else {
-					
-					message = "<strong>Below are the details for the requested Incident:-</strong><br><br><strong>Incident ID :</strong> " + result[0].number.replace("INC", "INC ") + "<br><strong>Short Description :</strong> " + result[0].short_description + "</br><strong>Status :</strong> " + stateDecode(result[0].state); 
-					//+ "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(result[0].assigned_to);
-	
-					callback({
-						status: "ok",
-						speech: message,
-						displayText:message,
-						data: {
-							"facebook":{
-								"attachment": {
-									"type": "template",
-									"payload": {
-										"template_type": "button",
-										"text": message + "<br><br>What do you want to do next?",
-										"buttons": [
-											{
-												"type": "postback",
-												"title": "Start Over",
-												"payload": "Hi"
-											},
-											{
-												"type": "postback",
-												"title": "End Conversation",
-												"payload": "Bye"
-											}
-										]
-									}
-								}
-							}
-						},
-						contextOut: [],
-						source: "boehringer-ingelheim"
-					});
-				}
-			});*/
 }
 
 var loginSucess = function(responseObj){
