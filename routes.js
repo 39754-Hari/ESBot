@@ -4,7 +4,7 @@ var fs 				= require("fs");
 var request			= require('request');
 var config			= require('./config.js');
 var path			= require("path");	
-
+var incident = require("./sn_api/incident");
 var Otps ={};
 router.get('/close',function(req,res){
 	res.redirect('close.html');
@@ -77,15 +77,89 @@ var welcome = function(req, responseObj){
 var createIncident = function(req, responseObj){
 	return new Promise(function(resolve,reject){
 		console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
-		simpleResponse(responseObj, "Your incident has been created successfully.")
+		/*simpleResponse(responseObj, "Your incident has been created successfully.")
 		.then(function(result){
 			var chips = [{"title": "Menu"}]
 			return suggestions(result,chips);
 		})
 		.then(function(result){
 			resolve(result);		
-		})
+		})*/
+		console.log("Inside Create Incident");
+		
+						var description = "";
+						var urgency = "";
+						var message = "";
+		
+						description = req.body.result.parameters.Incident_Description;
+						urgency = req.body.result.parameters.Urgency_Level;
+		
+						console.log("Description " + description + "\nUrgency " + urgency);
+		
+		
+						incident.createIncident(description, urgency).then(function(result){ //returns promise 
+								console.log(result)
+		
+								message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + result.number.replace("INC", "INC ") + "'";
+								simpleResponse(responseObj, message)
+								.then(function(result){
+									var chips = [{"title": "Menu"}]
+									return suggestions(result,chips);
+								})
+								.then(function(result){
+									resolve(result);		
+								})
+						});
 	});
+	/*console.log("Inside Create Incident");
+	
+					var description = "";
+					var urgency = "";
+					var message = "";
+	
+					description = req.body.result.parameters.Incident_Description;
+					urgency = req.body.result.parameters.Urgency_Level;
+	
+					console.log("Description " + description + "\nUrgency " + urgency);
+	
+	
+					incident.createIncident(description, urgency).then(function(result){ //returns promise 
+							console.log(result)
+	
+							message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + result.number.replace("INC", "INC ") + "'";
+	
+							callback({
+									status: "ok",
+									speech: message,
+									displayText:message,
+									data: {
+											"facebook":{
+													"attachment": {
+															"type": "template",
+															"payload": {
+																	"template_type": "button",
+																	"text": message + "<br><br>What do you want to do next?",
+																	"buttons": [
+																			{
+																					"type": "postback",
+																					"title": "Start Over",
+																					"payload": "Hi"
+																			},
+																			{
+																					"type": "postback",
+																					"title": "End Conversation",
+																					"payload": "Bye"
+																			}
+																	]
+															}
+													}
+											}
+									},
+									contextOut: [],
+									source: "boehringer-ingelheim"
+							});
+	
+					});*/
 }
 
 var loginSucess = function(responseObj){

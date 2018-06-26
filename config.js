@@ -1,3 +1,19 @@
+// Required config enviroment variables
+const SN_INSTANCE_ID = process.env.instanceId || "dev18442";
+const SN_USERNAME = "33238";//process.env.usernameServiceNow
+const SN_PASSWORD = "abc123";//process.env.passwordServiceNow
+
+// Settings
+const SN_ROWS_LIMIT = 10;
+const SN_API_VERSION = 'v2';
+
+// Urgency Levels
+const URGENCY_HIGH = 1;
+const URGENCY_MEDIUM = 2;
+const URGENCY_LOW = 3;
+
+
+
 module.exports = {
 	accessToken:"c1504b59c90448029b6b4edf822e9559",	
 	dialogFlowAPI:"https://api.api.ai/v1/query?v=20150910",
@@ -13,6 +29,23 @@ module.exports = {
 		  
 		}
 	  }
+	},
+	servicenowValues:{
+			// Environment Variables
+			SN_INSTANCE_ID: SN_INSTANCE_ID,
+			SN_USERNAME: SN_USERNAME,
+			SN_PASSWORD: SN_PASSWORD,
+
+			// Settings
+			SN_ROWS_LIMIT: SN_ROWS_LIMIT,
+			SN_API_VERSION: SN_API_VERSION,
+
+			// Urgency Levels
+			URGENCY: {
+					HIGH: URGENCY_HIGH,
+					MEDIUM: URGENCY_MEDIUM,
+					LOW: URGENCY_LOW
+			}
 	},
 	employees:{
 		"39781":{ph:"8500050085",name:"B+Hari+Prasad%2c"},
