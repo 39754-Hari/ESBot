@@ -206,7 +206,7 @@ var getIncidentById = function(req, responseObj){
 							}
 							else{
 								 var displayText = "Below are the details for the requested Incident:- ";
-								displayText = displayText +"Incident ID : " + resultobj[0].number.replace("INC", "INC ") + " Short Description : " + resultobj[0].short_description + "Status : " + stateDecode(resultobj[0].state);// + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
+								displayText = displayText +"Incident ID : " + resultobj[0].number.replace("INC", "INC ") + " Short Description : " + resultobj[0].short_description + " Status : " + stateDecode(resultobj[0].state);// + "<br><strong>Assigned To :</strong> " + req.app.locals.decodeAssignedTo(resultobj[0].assigned_to);
 								var speech = "These are the details for the requested Incident "
 								responseObj.payload.google.richResponse.items.push({
 									"simpleResponse": {
