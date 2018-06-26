@@ -211,7 +211,7 @@ var getIncidentById = function(req, responseObj){
 								responseObj.payload.google.richResponse.items.push({
 									"simpleResponse": {
 										"textToSpeech": speech,
-										"displayText": responseText
+										"displayText": displayText
 									}
 								});
 								var chips = [{"title": "Menu"}]
