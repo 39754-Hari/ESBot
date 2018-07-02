@@ -6,6 +6,8 @@ var config			= require('./config.js');
 var path			= require("path");	
 var incident = require("./sn_api/incident");
 var Otps ={};
+var initialReq = {};
+var initalResp={};
 router.get('/close',function(req,res){
 	res.redirect('close.html');
 })
@@ -45,9 +47,62 @@ router.post('/validateUser',function(req, res){
 		Otps[req.body.sess] = 45627;
 		console.log(smsApi,emps[req.body.username].ph);
 		request(smsApi,function(error,response,body){
-			console.log(error,body);
+			generateUserToken(initialReq).then(function(data){
+				if(data.auth){
+					simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
+					.then(function(result){	
+						console.log('simple response');
+						var items = [
+							{
+							  "optionInfo": {
+								"key": "HR",
+								"synonyms": [
+									"HR Self Service"
+								]
+							  },
+							  "title": "HR Self Service",
+							  "description": "for Leave management, Employee Search",				  
+							},
+							{
+							  "optionInfo": {
+								"key": "IT",
+								"synonyms": [
+									"IT Self Service"
+								]
+							  },
+							  "title": "IT Self Service",
+							  "description": "For : Account recovery , Help desk",				  
+							},
+							{
+							  "optionInfo": {
+								"key": "Meeting",
+								"synonyms": [
+									"Meeting Self Service"
+								]
+							  },
+							  "title": "Meeting Self Service",
+							  "description": "For : creating create, cancel and reschedule meeting",				  
+							}
+						  ];
+						return listItem(result, "Kindly select the service category",items);	
+					})
+					.then(function(result){		
+						var chips = [];							
+						console.log('sugge');
+						return suggestions(result, chips);
+					})
+					.then(function(result){	
+						//console.log(JSON.stringify(result));
+							console.log('leving log sucess');
+							res.json(result).end();
+					})			
+		
+				}
+			});
+			/*console.log(error,body);
 			res.status(200);
-			res.json({status:true}).end();
+			res.json({status:true}).end();*/
+
 		});		
 	}else{
 		console.log('fail');
@@ -58,6 +113,7 @@ router.post('/validateUser',function(req, res){
 
 
 generateUserToken = function(req){
+	return new Promise(function(resolve,reject){
 	console.log(req.originalDetectIntentRequest.payload);
 	var options ={
 		method: "POST",
@@ -68,12 +124,15 @@ generateUserToken = function(req){
 	console.log(options);
 	request(options,function(err,resp,body){
 		if(err)
-			console.log(err);
+			//console.log(err);
+			reject(err);
 		else	
-			console.log(body);
+			//console.log(body);
+			resolve(body);
 	});
-	
+});	
 }
+
 verifyUserToken = function(req){
 	return new Promise(function(resolve,reject){
 	console.log(req.originalDetectIntentRequest.payload);
@@ -97,6 +156,8 @@ verifyUserToken = function(req){
 }
 var welcome = function(req, responseObj){
 console.log('inside welcome');
+	initialReq = req;
+	initalResp = responseObj;
 	return new Promise(function(resolve,reject){
 		verifyUserToken(req).
 		then(function(data){
