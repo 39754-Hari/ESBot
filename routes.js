@@ -57,7 +57,7 @@ router.post('/validateUser',function(req, res){
 });
 
 
-checkUserToken = function(req){
+generateUserToken = function(req){
 	console.log(req.originalDetectIntentRequest.payload);
 	var options ={
 		method: "POST",
@@ -74,10 +74,26 @@ checkUserToken = function(req){
 	});
 	
 }
-
+verifyUserToken = function(req){
+	console.log(req.originalDetectIntentRequest.payload);
+	var options ={
+		method: "POST",
+		url: config.verifyTokenURL,
+		body:req.originalDetectIntentRequest.payload.user,
+		json:true
+	}
+	console.log(options);
+	request(options,function(err,resp,body){
+		if(err)
+			console.log(err);
+		else	
+			console.log(body);
+	});
+	
+}
 var welcome = function(req, responseObj){
 console.log('inside welcome');
-	var isTokenGenerated = checkUserToken(req);
+	var isTokenGenerated = verifyUserToken(req);
 	//if ()
 
 	return new Promise(function(resolve,reject){
