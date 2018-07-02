@@ -75,6 +75,7 @@ generateUserToken = function(req){
 	
 }
 verifyUserToken = function(req){
+	return new Promise(function(resolve,reject){
 	console.log(req.originalDetectIntentRequest.payload);
 	var options ={
 		method: "POST",
@@ -85,35 +86,88 @@ verifyUserToken = function(req){
 	console.log(options);
 	request(options,function(err,resp,body){
 		if(err)
-			console.log(err);
+			//console.log(err);
+			reject(err)
 		else	
 			//console.log(body);
-			return body.auth;
+			resolve( body);
 	});
 	
+	})
 }
 var welcome = function(req, responseObj){
 console.log('inside welcome');
-	var isTokenGenerated = verifyUserToken(req);
-	if (isTokenGenerated){
-		console.log('Token verified');
-	}
-
 	return new Promise(function(resolve,reject){
-		simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
-		.then(function(result){
-			var buttons = [
-			  {
-				"title": "Login",
-				"openUrlAction": {
-				  "url": "https://esbottest.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
-				}
-			  }
-			]
-			return basicCard(result,"Please login to Help you", buttons);
-		})
-		.then(function(result){
-			resolve(result);		
+		verifyUserToken(req).
+		then(function(data){
+			if (data.auth){
+				console.log('login success');
+				simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
+				.then(function(result){	
+					console.log('simple response');
+					var items = [
+						{
+						  "optionInfo": {
+							"key": "HR",
+							"synonyms": [
+								"HR Self Service"
+							]
+						  },
+						  "title": "HR Self Service",
+						  "description": "for Leave management, Employee Search",				  
+						},
+						{
+						  "optionInfo": {
+							"key": "IT",
+							"synonyms": [
+								"IT Self Service"
+							]
+						  },
+						  "title": "IT Self Service",
+						  "description": "For : Account recovery , Help desk",				  
+						},
+						{
+						  "optionInfo": {
+							"key": "Meeting",
+							"synonyms": [
+								"Meeting Self Service"
+							]
+						  },
+						  "title": "Meeting Self Service",
+						  "description": "For : creating create, cancel and reschedule meeting",				  
+						}
+					  ];
+					return listItem(result, "Kindly select the service category",items);	
+				})
+				.then(function(result){		
+					var chips = [];							
+					console.log('sugge');
+					return suggestions(result, chips);
+				})
+				.then(function(result){	
+					//console.log(JSON.stringify(result));
+						console.log('leving log sucess');
+					resolve(result);
+				})			
+	
+			}
+			else{
+				simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
+				.then(function(result){
+					var buttons = [
+					  {
+						"title": "Login",
+						"openUrlAction": {
+						  "url": "https://esbottest.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
+						}
+					  }
+					]
+					return basicCard(result,"Please login to Help you", buttons);
+				})
+				.then(function(result){
+					resolve(result);		
+				})
+			}
 		})
 	});
 }
