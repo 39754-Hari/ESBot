@@ -55,7 +55,28 @@ router.post('/validateUser',function(req, res){
 		res.json({status:false}).end();
 	}		
 });
+
+
+checkUserToken = function(req){
+	var options ={
+		method: POST,
+		url: config.generateTokenURL,
+		body:req.body.user,
+		json:true
+	}
+	request(options,function(err,resp,body){
+		if(err)
+			console.log(err);
+		else	
+			console.log(body);
+	});
+	
+}
+
 var welcome = function(req, responseObj){
+
+	var isTokenGenerated = checkUserToken(req);
+	//if ()
 
 	return new Promise(function(resolve,reject){
 		simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
