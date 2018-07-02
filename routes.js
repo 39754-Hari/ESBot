@@ -58,6 +58,7 @@ router.post('/validateUser',function(req, res){
 
 
 checkUserToken = function(req){
+	console.log(req.body);
 	var options ={
 		method: "POST",
 		url: config.generateTokenURL,
