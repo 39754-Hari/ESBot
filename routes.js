@@ -59,11 +59,12 @@ router.post('/validateUser',function(req, res){
 
 checkUserToken = function(req){
 	var options ={
-		method: POST,
+		method: "POST",
 		url: config.generateTokenURL,
 		body:req.body.user,
 		json:true
 	}
+	console.log(options);
 	request(options,function(err,resp,body){
 		if(err)
 			console.log(err);
@@ -74,7 +75,7 @@ checkUserToken = function(req){
 }
 
 var welcome = function(req, responseObj){
-
+console.log('inside welcome');
 	var isTokenGenerated = checkUserToken(req);
 	//if ()
 
