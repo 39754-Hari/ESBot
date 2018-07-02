@@ -87,14 +87,17 @@ verifyUserToken = function(req){
 		if(err)
 			console.log(err);
 		else	
-			console.log(body);
+			//console.log(body);
+			return body.auth;
 	});
 	
 }
 var welcome = function(req, responseObj){
 console.log('inside welcome');
 	var isTokenGenerated = verifyUserToken(req);
-	//if ()
+	if (isTokenGenerated){
+		console.log('Token verified');
+	}
 
 	return new Promise(function(resolve,reject){
 		simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
