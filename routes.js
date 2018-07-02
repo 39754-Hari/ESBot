@@ -62,7 +62,7 @@ checkUserToken = function(req){
 	var options ={
 		method: "POST",
 		url: config.generateTokenURL,
-		body:req.body.user,
+		body:req.originalDetectIntentRequest.payload.user,
 		json:true
 	}
 	console.log(options);
