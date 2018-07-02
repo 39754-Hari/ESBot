@@ -46,64 +46,63 @@ router.post('/validateUser',function(req, res){
 		smsApi = smsApi.replace('name',emps[req.body.username].name);
 		Otps[req.body.sess] = 45627;
 		console.log(smsApi,emps[req.body.username].ph);
-		request(smsApi,function(error,response,body){
-			generateUserToken(initialReq).then(function(data){
-				if(data.auth){
-					simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
-					.then(function(result){	
-						console.log('simple response');
-						var items = [
-							{
-							  "optionInfo": {
-								"key": "HR",
-								"synonyms": [
-									"HR Self Service"
-								]
-							  },
-							  "title": "HR Self Service",
-							  "description": "for Leave management, Employee Search",				  
-							},
-							{
-							  "optionInfo": {
-								"key": "IT",
-								"synonyms": [
-									"IT Self Service"
-								]
-							  },
-							  "title": "IT Self Service",
-							  "description": "For : Account recovery , Help desk",				  
-							},
-							{
-							  "optionInfo": {
-								"key": "Meeting",
-								"synonyms": [
-									"Meeting Self Service"
-								]
-							  },
-							  "title": "Meeting Self Service",
-							  "description": "For : creating create, cancel and reschedule meeting",				  
-							}
-						  ];
-						return listItem(result, "Kindly select the service category",items);	
-					})
-					.then(function(result){		
-						var chips = [];							
-						console.log('sugge');
-						return suggestions(result, chips);
-					})
-					.then(function(result){	
-						//console.log(JSON.stringify(result));
-							console.log('leving log sucess');
-							res.json(result).end();
-					})			
-		
-				}
-			});
-			/*console.log(error,body);
-			res.status(200);
-			res.json({status:true}).end();*/
+		generateUserToken(initialReq).then(function(data){
+			if(data.auth){
+				simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
+				.then(function(result){	
+					console.log('simple response');
+					var items = [
+						{
+						  "optionInfo": {
+							"key": "HR",
+							"synonyms": [
+								"HR Self Service"
+							]
+						  },
+						  "title": "HR Self Service",
+						  "description": "for Leave management, Employee Search",				  
+						},
+						{
+						  "optionInfo": {
+							"key": "IT",
+							"synonyms": [
+								"IT Self Service"
+							]
+						  },
+						  "title": "IT Self Service",
+						  "description": "For : Account recovery , Help desk",				  
+						},
+						{
+						  "optionInfo": {
+							"key": "Meeting",
+							"synonyms": [
+								"Meeting Self Service"
+							]
+						  },
+						  "title": "Meeting Self Service",
+						  "description": "For : creating create, cancel and reschedule meeting",				  
+						}
+					  ];
+					return listItem(result, "Kindly select the service category",items);	
+				})
+				.then(function(result){		
+					var chips = [];							
+					console.log('sugge');
+					return suggestions(result, chips);
+				})
+				.then(function(result){	
+					//console.log(JSON.stringify(result));
+						console.log('leving log sucess');
+					resolve(result);
+				})
+			}
+		})
+		// request(smsApi,function(error,response,body){
+		// 	console.log(error,body);
+		// 	res.status(200);
+		// 	res.json({status:true}).end();
 
-		});		
+		// });		
 	}else{
 		console.log('fail');
 		res.status(400);
@@ -156,8 +155,8 @@ verifyUserToken = function(req){
 }
 var welcome = function(req, responseObj){
 console.log('inside welcome');
-	initialReq = req;
-	initalResp = responseObj;
+initialReq = req;
+initalResp = responseObj;
 	return new Promise(function(resolve,reject){
 		verifyUserToken(req).
 		then(function(data){
