@@ -56,6 +56,7 @@ router.post('/validateUser',function(req, res){
 	}		
 });
 var welcome = function(req, responseObj){
+
 	return new Promise(function(resolve,reject){
 		simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please login to begin.")
 		.then(function(result){
@@ -63,7 +64,7 @@ var welcome = function(req, responseObj){
 			  {
 				"title": "Login",
 				"openUrlAction": {
-				  "url": "https://logintests.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
+				  "url": "https://esbottest.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
 				}
 			  }
 			]
@@ -77,17 +78,6 @@ var welcome = function(req, responseObj){
 
 var createIncident = function(req, responseObj){
 	return new Promise(function(resolve,reject){
-		console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
-		/*simpleResponse(responseObj, "Your incident has been created successfully.")
-		.then(function(result){
-			var chips = [{"title": "Menu"}]
-			return suggestions(result,chips);
-		})
-		.then(function(result){
-			resolve(result);		
-		})*/
-		console.log("Inside Create Incident");
-		
 						var description = "";
 						var urgency = "";
 						var message = "";
@@ -95,13 +85,8 @@ var createIncident = function(req, responseObj){
 						description = req.queryResult.parameters.Incident_Description;
 						urgency = req.queryResult.parameters.Urgency_Level;
 		
-						console.log("Description " + description + "\nUrgency " + urgency);
-		
-		
 						incident.createIncident(description, urgency).then(function(resultObj){ //returns promise 
-								console.log(resultObj)
-		
-								message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '" + resultObj.number.replace("INC", "INC ") + "'";
+						message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '" + resultObj.number.replace("INC", "INC ") + "'";
 							simpleResponse(responseObj, message)
 								.then(function(result){
 									var chips = [{"title": "Menu"}]
@@ -110,89 +95,19 @@ var createIncident = function(req, responseObj){
 								.then(function(result){
 									resolve(result);		
 								})
-								console.log(message);
 						});
 	});
-	/*console.log("Inside Create Incident");
-	
-					var description = "";
-					var urgency = "";
-					var message = "";
-	
-					description = req.body.result.parameters.Incident_Description;
-					urgency = req.body.result.parameters.Urgency_Level;
-	
-					console.log("Description " + description + "\nUrgency " + urgency);
-	
-	
-					incident.createIncident(description, urgency).then(function(result){ //returns promise 
-							console.log(result)
-	
-							message = "We are sorry for the inconvenience.<br>We have logged your incident in our system with the incident id '" + result.number.replace("INC", "INC ") + "'";
-	
-							callback({
-									status: "ok",
-									speech: message,
-									displayText:message,
-									data: {
-											"facebook":{
-													"attachment": {
-															"type": "template",
-															"payload": {
-																	"template_type": "button",
-																	"text": message + "<br><br>What do you want to do next?",
-																	"buttons": [
-																			{
-																					"type": "postback",
-																					"title": "Start Over",
-																					"payload": "Hi"
-																			},
-																			{
-																					"type": "postback",
-																					"title": "End Conversation",
-																					"payload": "Bye"
-																			}
-																	]
-															}
-													}
-											}
-									},
-									contextOut: [],
-									source: "boehringer-ingelheim"
-							});
-	
-					});*/
 }
 
 
 var getIncidentById = function(req, responseObj){
 	return new Promise(function(resolve,reject){
-		//console.log('Description::',req.queryResult.parameters.Incident_Description,"Urgency",req.queryResult.parameters.Urgency_Level);
-		/*simpleResponse(responseObj, "Your incident has been created successfully.")
-		.then(function(result){
-			var chips = [{"title": "Menu"}]
-			return suggestions(result,chips);
-		})
-		.then(function(result){
-			resolve(result);		
-		})*/
-		console.log("Inside Incident status");
 		
 					var incident_number = "";
 					incident_number = "INC"+req.queryResult.parameters.incident_number;
-		
-						//console.log("Description " + description + "\nUrgency " + urgency);
-		
-		
-						var message = "";
-						
-								console.log("Incident Number " + incident_number)
-						
-						
-								incident.getIncidentByIncidentId(incident_number).then(function(resultobj){ //returns promise 
-									console.log(resultobj[0]);
-								
-									if (resultobj.length == 0) {
+					var message = "";
+					incident.getIncidentByIncidentId(incident_number).then(function(resultobj){ //returns promise 
+					if (resultobj.length == 0) {
 										message = "There is no record for the given incident number " + incident_number.replace("INC", "INC ");
 							simpleResponse(responseObj, message)
 								.then(function(result){
@@ -202,7 +117,6 @@ var getIncidentById = function(req, responseObj){
 								.then(function(result){
 									resolve(result);		
 								})
-								console.log(message);
 							}
 							else{
 								 var displayText = "Below are the details for the requested Incident:- ";
