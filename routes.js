@@ -93,7 +93,7 @@ router.post('/validateUser',function(req, res){
 				.then(function(result){	
 					//console.log(JSON.stringify(result));
 						console.log('leving log sucess');
-					resolve(result);
+						res.json(result).end();
 				})
 			}
 		})
