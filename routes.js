@@ -208,6 +208,7 @@ initalResp = responseObj;
 					//console.log(JSON.stringify(result));
 						console.log('leving log sucess');
 					resolve(result);
+					//responseObj.json(result)
 				})			
 	
 			}
@@ -225,7 +226,8 @@ initalResp = responseObj;
 					return basicCard(result,"Please login to Help you", buttons);
 				})
 				.then(function(result){
-					resolve(result);		
+					//resolve(result);		
+					responseObj.json(result);
 				})
 			}
 		})
