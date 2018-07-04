@@ -26,6 +26,9 @@ router.post('/botHandler',function(req, res){
 	.then(function(result){
 		console.log(result);
 		console.log(JSON.stringify(result));
+		if(actionName == 'input.welcome')
+			res.json(result);
+		else
 		res.json(result).end();
 	})
 	
@@ -226,8 +229,8 @@ initalResp = responseObj;
 					return basicCard(result,"Please login to Help you", buttons);
 				})
 				.then(function(result){
-					//resolve(result);		
-					responseObj.json(result);
+					resolve(result);		
+					//responseObj.json(result);
 				})
 			}
 		})
