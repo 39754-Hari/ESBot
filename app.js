@@ -4,7 +4,7 @@ var routes = require('./routes');
 var redirect = require("express-redirect");
 var app = express();
 var session = require('express-session');
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 app.use(session({ secret: 'this-is-a-secret-token',resave: true, saveUninitialized: true, cookie: { maxAge: 60000 }}));
 redirect(app);
 //global.recentInput = "";
