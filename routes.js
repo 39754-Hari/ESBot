@@ -41,7 +41,7 @@ router.post('/botHandler',function(req, res){
 
 router.post('/validateUser',function(req, res){
 	console.log(typeof(req.body.username));
-	if(typeof(emps[req.body.username])!='undefined'){
+	if(typeof(req.body.username)!='undefined'){
 		/*var smsApi = config.smsApi.replace('phonenumber',emps[req.body.username].ph);	
 		smsApi = smsApi.replace('Otpnumber',45627);
 		smsApi = smsApi.replace('name',emps[req.body.username].name);
