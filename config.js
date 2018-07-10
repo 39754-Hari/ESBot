@@ -52,10 +52,10 @@ module.exports = {
 		"39754":{ph:"9626649195",name:"V+Hari+Krishna%2c"}
 	},
 	"smsApi":"http://smsapi.24x7sms.com/api_2.0/SendSMS.aspx?APIKEY=ZY2nHm2RiIC&MobileNo=phonenumber&SenderID=TESTIN&Message=Dear+name+the+OTP+to+reset+your+password+is+Otpnumber%2c+valid+only+for+the+next+30++minutes.&ServiceName=TEMPLATE_BASED" ,
-	/*"generateTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/generateToken",
-	"verifyTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/verify",*/
-	"generateTokenURL":"http://172.25.143.32:3000/api/auth/generateTocken",
-	"verifyTokenURL":"http://172.25.143.32:3000/api/auth/verify"
+	"generateTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/generateToken",
+	"verifyTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/verify",
+	/*"generateTokenURL":"http://172.25.143.32:3000/api/auth/generateTocken",
+	"verifyTokenURL":"http://172.25.143.32:3000/api/auth/verify"*/
 }
 
 
