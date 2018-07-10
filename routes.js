@@ -150,7 +150,7 @@ verifyUserToken = function(req){
 	request(options,function(err,resp,body){
 		if(err)
 			//console.log(err);
-			reject(err)
+			resolve(err)
 		else	
 			//console.log(body);
 			resolve( body);
