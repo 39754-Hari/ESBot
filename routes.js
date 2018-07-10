@@ -40,16 +40,14 @@ router.post('/botHandler',function(req, res){
 
 
 router.post('/validateUser',function(req, res){
-	var emps = config.employees;
-	currentSession = req.body.sess;
-	console.log(typeof(emps[req.body.username]));
+	console.log(typeof(req.body.username));
 	if(typeof(emps[req.body.username])!='undefined'){
-		var smsApi = config.smsApi.replace('phonenumber',emps[req.body.username].ph);	
+		/*var smsApi = config.smsApi.replace('phonenumber',emps[req.body.username].ph);	
 		smsApi = smsApi.replace('Otpnumber',45627);
 		smsApi = smsApi.replace('name',emps[req.body.username].name);
 		Otps[req.body.sess] = 45627;
-		console.log(smsApi,emps[req.body.username].ph);
-		generateUserToken(initialReq).then(function(data){
+		console.log(smsApi,emps[req.body.username].ph);*/
+		generateUserToken(req).then(function(data){
 			if(data.auth){
 				simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
 				.then(function(result){	
@@ -117,10 +115,14 @@ router.post('/validateUser',function(req, res){
 generateUserToken = function(req){
 	return new Promise(function(resolve,reject){
 	console.log(req.originalDetectIntentRequest.payload);
+	var requset = initialReq.originalDetectIntentRequest.payload.user;
+	request.userName = req.body.username;
+	request.password = req.body.password;
+	console.log(request);	
 	var options ={
 		method: "POST",
 		url: config.generateTokenURL,
-		body:req.originalDetectIntentRequest.payload.user,
+		body:request,
 		json:true
 	}
 	console.log(options);
