@@ -55,7 +55,8 @@ module.exports = {
 	/*"generateTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/generateToken",
 	"verifyTokenURL":"https://paynowfrombot.herokuapp.com/api/auth/verify",*/
 	"generateTokenURL":"http://172.25.143.32:3000/api/auth/generateTocken",
-	"verifyTokenURL":"http://172.25.143.32:3000/api/auth/verify"
+	"verifyTokenURL":"http://172.25.143.32:3000/api/auth/verify",
+	"leaveBalanceAPI" : "http://ps92dmo.hexaware.com:8080/PSIGW/RESTListeningConnector/PSFT_HR/HX_LMS_BOT_ABS_DTLS_RST.v1/KU0097"
 }
 
 

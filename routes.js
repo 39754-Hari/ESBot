@@ -21,6 +21,7 @@ router.post('/botHandler',function(req, res){
 		case 'input.unknown':func = defaultFallBack;break;
 		case 'input.create_incident': func = createIncident;break;
 		case 'input.incident_status_by_id': func = getIncidentById;break;
+		case 'input.get_leave_balance': func = getLeaveBalance;break;
 	}
 	func(req.body,responseObj)
 	.then(function(result){
@@ -301,6 +302,38 @@ var getIncidentById = function(req, responseObj){
 						});
 	});
 }
+
+var getLeaveBalance = function(req, responseObj){
+	return new Promise(function(resolve,reject){
+	//	verifyUserToken(req).
+		//then(function(data){
+			var options ={
+				method: "GET",
+				url: config.leaveBalanceAPI,
+				json:true
+			}
+			console.log(options);
+			request(options,function(err,resp,body){
+				if(err)
+					//console.log(err);
+					reject(err);
+				else	
+					console.log(body);
+				message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '";
+				simpleResponse(responseObj, message)
+					.then(function(result){
+						var chips = [{"title": "Menu"}]
+						return suggestions(result,chips);
+					})
+					.then(function(result){
+						resolve(result);		
+					})
+					//resolve(body);
+			});
+		});					
+	//});
+}
+
 
 var loginSucess = function(responseObj){
 	return new Promise(function(resolve,reject){
