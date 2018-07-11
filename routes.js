@@ -31,12 +31,7 @@ router.post('/botHandler',function(req, res){
 			res.json(result);
 		else
 		res.json(result).end();
-	})
-	
-	/*
-	
-	*/
-	
+	})	
 });	
 
 
@@ -48,8 +43,8 @@ router.post('/validateUser',function(req, res){
 		smsApi = smsApi.replace('name',emps[req.body.username].name);
 		Otps[req.body.sess] = 45627;
 		console.log(smsApi,emps[req.body.username].ph);*/
-		generateUserToken(req).then(function(data){
-			if(data.auth){
+		/*generateUserToken(req).then(function(data){
+			if(data.auth){*/
 				simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
 				.then(function(result){	
 					console.log('simple response');
@@ -97,8 +92,8 @@ router.post('/validateUser',function(req, res){
 						console.log('leving log sucess');
 						res.json(result).end();
 				})
-			}
-		})
+			/*}
+		})*/
 		// request(smsApi,function(error,response,body){
 		// 	console.log(error,body);
 		// 	res.status(200);
@@ -163,10 +158,11 @@ var welcome = function(req, responseObj){
 console.log('inside welcome');
 initialReq = req;
 initalResp = responseObj;
+var auth = false
 	return new Promise(function(resolve,reject){
-		verifyUserToken(req).
-		then(function(data){
-			if (data.auth){
+		/*verifyUserToken(req).
+		then(function(data){*/
+			if (auth){
 				console.log('login success');
 				simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
 				.then(function(result){	
@@ -236,7 +232,7 @@ initalResp = responseObj;
 					//responseObj.json(result);
 				})
 			}
-		})
+		//})
 	});
 }
 
@@ -270,7 +266,7 @@ var getIncidentById = function(req, responseObj){
 					var incident_number = "";
 					incident_number = "INC"+req.queryResult.parameters.incident_number;
 					var message = "";
-					incident.getIncidentByIncidentId(incident_number).then(function(resultobj){ //returns promise 
+					incident.getIncidentByIncidentId(incident_number).then(function(resultobj){  
 					if (resultobj.length == 0) {
 										message = "There is no record for the given incident number " + incident_number.replace("INC", "INC ");
 							simpleResponse(responseObj, message)
