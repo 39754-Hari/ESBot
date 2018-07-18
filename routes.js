@@ -260,6 +260,7 @@ var createIncident = function(req, responseObj){
 }
 
 
+
 var getIncidentById = function(req, responseObj){
 	return new Promise(function(resolve,reject){
 		
