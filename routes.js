@@ -111,14 +111,14 @@ router.post('/validateUser',function(req, res){
 generateUserToken = function(req){
 	return new Promise(function(resolve,reject){
 	console.log(initialReq.originalDetectIntentRequest.payload.user);
-	var requset = {'userId':initialReq.originalDetectIntentRequest.payload.user.userId};
-	request.userName = req.body.username;
-	request.password = req.body.password;
+	var reqBody = initialReq.originalDetectIntentRequest.payload.user;
+	reqBody.userName = req.body.username;
+	reqBody.password = req.body.password;
 	console.log('Request:',request);	
 	var options ={
 		method: "POST",
 		url: config.generateTokenURL,
-		body:request,
+		body:reqBody,
 		json:true
 	}
 	console.log(options);
