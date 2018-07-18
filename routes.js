@@ -114,7 +114,7 @@ generateUserToken = function(req){
 	var requset = {'userId':initialReq.originalDetectIntentRequest.payload.user.userId};
 	request.userName = req.body.username;
 	request.password = req.body.password;
-	console.log(request);	
+	console.log('Request:',request);	
 	var options ={
 		method: "POST",
 		url: config.generateTokenURL,
