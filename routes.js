@@ -43,8 +43,8 @@ router.post('/validateUser',function(req, res){
 		smsApi = smsApi.replace('name',emps[req.body.username].name);
 		Otps[req.body.sess] = 45627;
 		console.log(smsApi,emps[req.body.username].ph);*/
-		/*generateUserToken(req).then(function(data){
-			if(data.auth){*/
+		generateUserToken(req).then(function(data){
+			if(data.auth){
 				simpleResponse(initalResp, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
 				.then(function(result){	
 					console.log('simple response');
@@ -92,8 +92,8 @@ router.post('/validateUser',function(req, res){
 						console.log('leving log sucess');
 						res.json(result).end();
 				})
-			/*}
-		})*/
+			}
+		})
 		// request(smsApi,function(error,response,body){
 		// 	console.log(error,body);
 		// 	res.status(200);
@@ -125,7 +125,7 @@ generateUserToken = function(req){
 	request(options,function(err,resp,body){
 		if(err)
 			//console.log(err);
-			reject(err);
+		resolve(err);
 		else	
 			//console.log(body);
 			resolve(body);
@@ -160,8 +160,8 @@ initialReq = req;
 initalResp = responseObj;
 var auth = false
 	return new Promise(function(resolve,reject){
-		/*verifyUserToken(req).
-		then(function(data){*/
+		verifyUserToken(req).
+		then(function(data){
 			if (auth){
 				console.log('login success');
 				simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
@@ -232,7 +232,7 @@ var auth = false
 					//responseObj.json(result);
 				})
 			}
-		//})
+		})
 	});
 }
 
