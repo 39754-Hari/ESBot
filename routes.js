@@ -158,11 +158,10 @@ var welcome = function(req, responseObj){
 console.log('inside welcome');
 initialReq = req;
 initalResp = responseObj;
-var auth = false
 	return new Promise(function(resolve,reject){
 		verifyUserToken(req).
 		then(function(data){
-			if (auth){
+			if (data.auth){
 				console.log('login success');
 				simpleResponse(responseObj, "Hi I'm Hema !. I can help you to manage your leaves,search an employee, account recovery and create or track your service tickets. Please select an option to begin.")
 				.then(function(result){	
