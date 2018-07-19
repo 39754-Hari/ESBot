@@ -93,6 +93,11 @@ router.post('/validateUser',function(req, res){
 						res.json(result).end();
 				})
 			}
+			else{
+				console.log('fail');
+				res.status(400);
+				res.json({status:false}).end();
+			}	
 		})
 		// request(smsApi,function(error,response,body){
 		// 	console.log(error,body);
