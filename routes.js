@@ -306,33 +306,53 @@ var getIncidentById = function(req, responseObj){
 
 var getLeaveBalance = function(req, responseObj){
 	return new Promise(function(resolve,reject){
-	//	verifyUserToken(req).
-		//then(function(data){
-			var options ={
-				method: "GET",
-				url: config.leaveBalanceAPI,
-				json:true
+	verifyUserToken(req).
+		then(function(data){
+			if(data.auth){
+				var options ={
+					method: "GET",
+					url: config.leaveBalanceAPI,
+					json:true
+				}
+				console.log(options);
+				request(options,function(err,resp,body){
+					if(err)
+						//console.log(err);
+						reject(err);
+					else	
+						console.log(body);
+					message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '";
+					simpleResponse(responseObj, message)
+						.then(function(result){
+							var chips = [{"title": "Menu"}]
+							return suggestions(result,chips);
+						})
+						.then(function(result){
+							resolve(result);		
+						})
+						//resolve(body);
+				});
+			}else{
+				simpleResponse(responseObj, "Seems you are not logged in.Please login to continue.")
+				.then(function(result){
+					var buttons = [
+					  {
+						"title": "Login",
+						"openUrlAction": {
+						  "url": "https://esbottest.herokuapp.com/login.html?convId="+req.originalDetectIntentRequest.payload.conversation.conversationId
+						}
+					  }
+					]
+					return basicCard(result,"Please login to Help you", buttons);
+				})
+				.then(function(result){
+					resolve(result);		
+					//responseObj.json(result);
+				})
 			}
-			console.log(options);
-			request(options,function(err,resp,body){
-				if(err)
-					//console.log(err);
-					reject(err);
-				else	
-					console.log(body);
-				message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '";
-				simpleResponse(responseObj, message)
-					.then(function(result){
-						var chips = [{"title": "Menu"}]
-						return suggestions(result,chips);
-					})
-					.then(function(result){
-						resolve(result);		
-					})
-					//resolve(body);
-			});
+			
 		});					
-	//});
+	});
 }
 
 
