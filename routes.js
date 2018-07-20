@@ -322,7 +322,7 @@ var getLeaveBalance = function(req, responseObj){
 					else	
 						console.log(body);
 					var leave_balance =[];
-					var dataitrate = body.HX_LV_BAL_SUB;
+					var dataitrate = body.root.HX_LV_BAL_SUB;
 					for(var i in dataitrate){
 						console.log(i);
 						leave_balance.push({
