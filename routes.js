@@ -323,7 +323,7 @@ var getLeaveBalance = function(req, responseObj){
 						console.log(body);
 					var leave_balance =[];
 					var dataitrate = body.HX_LV_BAL_SUB;
-					for(var item in dataitrate){
+					for(var i in dataitrate){
 						leave_balance.push({
 							"optionInfo": { 
 								"key":dataitrate[i].LEAVEDESC,
