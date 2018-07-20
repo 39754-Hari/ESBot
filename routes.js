@@ -321,8 +321,23 @@ var getLeaveBalance = function(req, responseObj){
 						reject(err);
 					else	
 						console.log(body);
-					message = "We are sorry for the inconvenience.We have logged your incident in our system with the incident iD '";
+					var leave_balance =[];
+					var dataitrate = body.HX_LV_BAL_SUB;
+					for(var item in dataitrate){
+						leave_balance.push({
+							"optionInfo": { 
+								"key":dataitrate[i].LEAVEDESC,
+								"synonyms": [dataitrate[i].LEAVEDESC]
+								},
+								"title": dataitrate[i].LEAVEDESC,
+								"description": dataitrate[i].LEAVEBALANCE
+								})
+					}
+					message = "Here are the available leave balance for you";
 					simpleResponse(responseObj, message)
+						.then(function(result){
+							return listItem(result, "Leave Balance",leave_balance);
+						})
 						.then(function(result){
 							var chips = [{"title": "Menu"}]
 							return suggestions(result,chips);
