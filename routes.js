@@ -333,6 +333,7 @@ var getLeaveBalance = function(req, responseObj){
 								"description": dataitrate[i].LEAVEBALANCE
 								})
 					}
+					console.log('leave_balance:',leave_balance );
 					message = "Here are the available leave balance for you";
 					simpleResponse(responseObj, message)
 						.then(function(result){
